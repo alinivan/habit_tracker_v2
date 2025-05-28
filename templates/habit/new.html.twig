@@ -1,0 +1,108 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Habit{% endblock %}
+
+{% block header %}Create new habit{% endblock %}
+
+{% block body %}
+    <div class="max-w-2xl mx-auto">
+        {{ form_start(form, {'attr': {'class': 'space-y-8 divide-y divide-gray-200'}}) }}
+            <div class="space-y-8 divide-y divide-gray-200 sm:space-y-5">
+                <div class="space-y-6 sm:space-y-5">
+                    <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">
+                        {{ form_label(form.name, 'Name', {'label_attr': {'class': 'block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'}}) }}
+                        <div class="mt-1 sm:col-span-2 sm:mt-0">
+                            {{ form_widget(form.name, {'attr': {'class': 'block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm'}}) }}
+                            {{ form_errors(form.name) }}
+                        </div>
+                    </div>
+
+                    <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">
+                        {{ form_label(form.minValue, 'Min value', {'label_attr': {'class': 'block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'}}) }}
+                        <div class="mt-1 sm:col-span-2 sm:mt-0">
+                            {{ form_widget(form.minValue, {'attr': {'class': 'block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm'}}) }}
+                            {{ form_errors(form.minValue) }}
+                        </div>
+                    </div>
+
+                    <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">
+                        {{ form_label(form.order, 'Order', {'label_attr': {'class': 'block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'}}) }}
+                        <div class="mt-1 sm:col-span-2 sm:mt-0">
+                            {{ form_widget(form.order, {'attr': {'class': 'block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm'}}) }}
+                            {{ form_errors(form.order) }}
+                        </div>
+                    </div>
+
+                    <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">
+                        {{ form_label(form.points, 'Points', {'label_attr': {'class': 'block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'}}) }}
+                        <div class="mt-1 sm:col-span-2 sm:mt-0">
+                            {{ form_widget(form.points, {'attr': {'class': 'block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm'}}) }}
+                            {{ form_errors(form.points) }}
+                        </div>
+                    </div>
+
+                    <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">
+                        {{ form_label(form.active, 'Active', {'label_attr': {'class': 'block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'}}) }}
+                        <div class="mt-1 sm:col-span-2 sm:mt-0">
+                            {{ form_widget(form.active, {'attr': {'class': 'h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500'}}) }}
+                            {{ form_errors(form.active) }}
+                        </div>
+                    </div>
+
+                    <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">
+                        {{ form_label(form.measurement, 'Measurement', {'label_attr': {'class': 'block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'}}) }}
+                        <div class="mt-1 sm:col-span-2 sm:mt-0">
+                            {{ form_widget(form.measurement, {'attr': {'class': 'block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm'}}) }}
+                            {{ form_errors(form.measurement) }}
+                        </div>
+                    </div>
+
+                    <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">
+                        {{ form_label(form.category, 'Category', {'label_attr': {'class': 'block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'}}) }}
+                        <div class="mt-1 sm:col-span-2 sm:mt-0">
+                            {{ form_widget(form.category, {'attr': {'class': 'block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm'}}) }}
+                            {{ form_errors(form.category) }}
+                        </div>
+                    </div>
+
+                    <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">
+                        {{ form_label(form.isProductive, 'Productive', {'label_attr': {'class': 'block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'}}) }}
+                        <div class="mt-1 sm:col-span-2 sm:mt-0">
+                            {{ form_widget(form.isProductive, {'attr': {'class': 'h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500'}}) }}
+                            {{ form_errors(form.isProductive) }}
+                        </div>
+                    </div>
+
+                    <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">
+                        {{ form_label(form.parent, 'Parent', {'label_attr': {'class': 'block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'}}) }}
+                        <div class="mt-1 sm:col-span-2 sm:mt-0">
+                            {{ form_widget(form.parent, {'attr': {'class': 'block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm'}}) }}
+                            {{ form_errors(form.parent) }}
+                        </div>
+                    </div>
+
+                    <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">
+                        {{ form_label(form.valueType, 'Type', {'label_attr': {'class': 'block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2'}}) }}
+                        <div class="mt-1 sm:col-span-2 sm:mt-0">
+                            {{ form_widget(form.valueType, {'attr': {'class': 'block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:max-w-xs sm:text-sm'}}) }}
+                            {{ form_errors(form.valueType) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-5">
+                <div class="flex justify-end gap-x-3">
+                    <a href="{{ path('app_habit_index') }}"
+                       class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                        Cancel
+                    </a>
+                    <button type="submit"
+                            class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                        Create
+                    </button>
+                </div>
+            </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %} 
