@@ -36,8 +36,8 @@ class Habit
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $measurement = null;
 
-    #[ORM\Column]
-    private ?bool $is_productive = false;
+    #[ORM\Column(name: 'is_productive')]
+    private ?bool $isProductive = false;
 
     #[ORM\Column]
     private ?int $points = 0;
@@ -133,12 +133,12 @@ class Habit
 
     public function isProductive(): ?bool
     {
-        return $this->is_productive;
+        return $this->isProductive;
     }
 
-    public function setIsProductive(bool $is_productive): static
+    public function setIsProductive(bool $isProductive): static
     {
-        $this->is_productive = $is_productive;
+        $this->isProductive = $isProductive;
         return $this;
     }
 

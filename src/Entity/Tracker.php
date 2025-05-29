@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TrackerRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Tracker
 {
     #[ORM\Id]
@@ -14,8 +15,9 @@ class Tracker
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $habit_id = null;
+    #[ORM\ManyToOne(targetEntity: Habit::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Habit $habit = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date = null;
@@ -23,23 +25,44 @@ class Tracker
     #[ORM\Column(type: Types::DECIMAL, precision: 5, scale: 1)]
     private ?string $value = null;
 
+    #[ORM\ManyToOne(targetEntity: RoutineCategory::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?RoutineCategory $routineCategory = null;
+
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
+    private ?\DateTimeImmutable $createdAt = null;
+
     #[ORM\Column]
-    private ?int $routine_category_id = null;
+    private ?int $points = 0;
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
+    }
+
+    #[ORM\PrePersist]
+    public function setCreatedAtValue(): void
+    {
+        $this->createdAt = new \DateTimeImmutable();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getHabitId(): ?int
+    public function getHabit(): ?Habit
     {
-        return $this->habit_id;
+        return $this->habit;
     }
 
-    public function setHabitId(int $habit_id): static
+    public function setHabit(?Habit $habit): static
     {
-        $this->habit_id = $habit_id;
-
+        $this->habit = $habit;
         return $this;
     }
 
@@ -51,7 +74,6 @@ class Tracker
     public function setDate(\DateTimeInterface $date): static
     {
         $this->date = $date;
-
         return $this;
     }
 
@@ -63,19 +85,54 @@ class Tracker
     public function setValue(string $value): static
     {
         $this->value = $value;
-
         return $this;
     }
 
-    public function getRoutineCategoryId(): ?int
+    public function getRoutineCategory(): ?RoutineCategory
     {
-        return $this->routine_category_id;
+        return $this->routineCategory;
     }
 
-    public function setRoutineCategoryId(int $routine_category_id): static
+    public function setRoutineCategory(?RoutineCategory $routineCategory): static
     {
-        $this->routine_category_id = $routine_category_id;
-
+        $this->routineCategory = $routineCategory;
         return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function getPoints(): ?int
+    {
+        return $this->points;
+    }
+
+    public function setPoints(int $points): static
+    {
+        $this->points = $points;
+        return $this;
+    }
+
+    #[ORM\PrePersist]
+    public function calculatePoints(): void
+    {
+        if ($this->habit && $this->habit->isProductive()) {
+            $this->points = $this->habit->getPoints();
+        } else {
+            $this->points = 0;
+        }
     }
 }

@@ -10,7 +10,7 @@
 
 .env
 .idea
-.composer/
+/.composer/
 
 ###> symfony/webpack-encore-bundle ###
 /node_modules/

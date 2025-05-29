@@ -1,0 +1,112 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block body %}
+    <div class="container mx-auto px-4 py-8">
+        {# Stats Section #}
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+            <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="text-lg font-semibold text-gray-700 mb-2">Productive Hours Today</h3>
+                <p class="text-3xl font-bold text-indigo-600">{{ stats.productive_hours }}</p>
+            </div>
+            <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="text-lg font-semibold text-gray-700 mb-2">Start Hour</h3>
+                <p class="text-3xl font-bold text-indigo-600">{{ stats.start_hour|date('H:i') }}</p>
+            </div>
+            <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="text-lg font-semibold text-gray-700 mb-2">Average Points (7d)</h3>
+                <p class="text-3xl font-bold text-indigo-600">{{ stats.average_points }}</p>
+            </div>
+            <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="text-lg font-semibold text-gray-700 mb-2">Last Weight</h3>
+                <p class="text-3xl font-bold text-indigo-600">{{ stats.last_weight ?? 'N/A' }}</p>
+            </div>
+        </div>
+
+        {# Categories and Habits Section #}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for category in categories %}
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-xl font-bold" style="color: {{ category.color }}">
+                            {{ category.name }}
+                        </h2>
+                        <a href="{{ path('app_category_edit', {'id': category.id}) }}" class="text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                    </div>
+                    <div class="space-y-4">
+                        {% for habit in category.habits %}
+                            {% if habit.active %}
+                                <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                                    <div class="flex items-center space-x-3">
+                                        <span class="text-gray-700">{{ habit.name }}</span>
+                                        {% if habit.isProductive %}
+                                            <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">
+                                                {{ habit.points }} pts
+                                            </span>
+                                        {% endif %}
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        {% if habits_values[habit.id] is defined %}
+                                            <span class="text-indigo-600 font-semibold">
+                                                {{ habits_values[habit.id] }}
+                                                {% if habit.measurement %}
+                                                    {{ habit.measurement }}
+                                                {% endif %}
+                                            </span>
+                                        {% endif %}
+                                        <a href="{{ path('app_habit_edit', {'id': habit.id}) }}" class="text-gray-500 hover:text-gray-700">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        {# Tracker Data Section #}
+        {% if tracker_data %}
+            <div class="mt-8">
+                <h2 class="text-2xl font-bold mb-4">Recent Activity</h2>
+                <div class="bg-white rounded-lg shadow overflow-hidden">
+                    <table class="min-w-full">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Habit</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Value</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Points</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            {% for entry in tracker_data %}
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ entry.habit.name }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        {{ entry.value }}
+                                        {% if entry.habit.measurement %}
+                                            {{ entry.habit.measurement }}
+                                        {% endif %}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        {% if entry.points > 0 %}
+                                            <span class="text-green-600">+{{ entry.points }}</span>
+                                        {% else %}
+                                            {{ entry.points }}
+                                        {% endif %}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ entry.date|date('Y-m-d H:i') }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %} 
